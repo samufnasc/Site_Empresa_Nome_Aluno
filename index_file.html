@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreCorp Enterprise - Gestão de Colaboradores</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- SDK do Supabase via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+    <!-- Cabeçalho Principal -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="icon">🏢</span>
+            <h1>CoreCorp <span>ENTERPRISE</span></h1>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+
+        <!-- Formulário de Cadastro de Funcionário -->
+        <section class="card-section">
+            <h2>Cadastrar Novo Funcionário</h2>
+            <form id="form-funcionario" class="form-grid">
+                <div class="form-group">
+                    <label for="func_nome">Nome Completo</label>
+                    <input type="text" id="func_nome" placeholder="Ex: Samuel Nascimento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="func_email">E-mail Corporativo</label>
+                    <input type="email" id="func_email" placeholder="nome@empresa.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="func_cargo">Cargo / Função</label>
+                    <input type="text" id="func_cargo" placeholder="Ex: Engenheiro de Software" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="func_departamento">Departamento / Setor</label>
+                    <input type="text" id="func_departamento" placeholder="Ex: Tecnologia da Informação">
+                </div>
+
+                <!-- Campo de Foto Sem 'required' (Opcional) -->
+                <div class="form-group full-width">
+                    <label for="func_foto">Foto de Perfil <small style="color: #94a3b8;">(Opcional)</small></label>
+                    <input type="file" id="func_foto" accept="image/*">
+                </div>
+
+                <div class="form-actions full-width">
+                    <button type="submit" class="btn-primary">Cadastrar Funcionário</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Tabela de Listagem dos Colaboradores -->
+        <section class="card-section">
+            <h2>Quadro de Colaboradores</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Cargo / Função</th>
+                            <th>Departamento</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-funcionarios-body">
+                        <tr>
+                            <td colspan="5" style="text-align: center;">Carregando colaboradores...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scripts do Projeto -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
