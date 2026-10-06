@@ -1,0 +1,49 @@
+-- ============================================================
+-- SQL para executar no SQL Editor do Supabase
+-- Projeto: CoreCorp Enterprise - Gestão de Colaboradores
+-- ============================================================
+
+-- 1. Criar a tabela de funcionários
+CREATE TABLE IF NOT EXISTS public.funcionarios (
+    id BIGSERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    email TEXT NOT NULL,
+    cargo TEXT,
+    departamento TEXT,
+    foto_url TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. Habilitar Row Level Security (RLS)
+ALTER TABLE public.funcionarios ENABLE ROW LEVEL SECURITY;
+
+-- 3. Políticas de acesso (permite leitura e inserção com a anon key)
+CREATE POLICY "Permitir leitura pública"
+    ON public.funcionarios
+    FOR SELECT
+    TO anon
+    USING (true);
+
+CREATE POLICY "Permitir inserção pública"
+    ON public.funcionarios
+    FOR INSERT
+    TO anon
+    WITH CHECK (true);
+
+-- 4. Criar o bucket de storage para as fotos
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('fotos-funcionarios', 'fotos-funcionarios', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- 5. Políticas do bucket (leitura e upload públicos)
+CREATE POLICY "Leitura pública das fotos"
+    ON storage.objects
+    FOR SELECT
+    TO anon
+    USING (bucket_id = 'fotos-funcionarios');
+
+CREATE POLICY "Upload público das fotos"
+    ON storage.objects
+    FOR INSERT
+    TO anon
+    WITH CHECK (bucket_id = 'fotos-funcionarios');
